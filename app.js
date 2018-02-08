@@ -1,5 +1,6 @@
 // Update this with your API key from newsapi.org
 const apiKey = 'yourApiKeyHere';
+
 const main = document.querySelector('main');
 const sourceSelector = document.querySelector('#sourceSelector');
 // You can set this default to wahtever news source you want
@@ -15,6 +16,16 @@ window.addEventListener('load', async (e) => {
   sourceSelector.addEventListener('change', (e) => {
     updateNews(e.target.value);
   })
+
+  // check if service workers are supported and register
+  if ('serviceWorker' in navigator) {
+      try {
+        navigator.serviceWorker.register('sw.js');
+        console.log('SW registered');
+      } catch (error) {
+        console.log('SW failed to register');
+      }
+    }
 })
 
 // Gets a list of possible news sources and populates the select with them
