@@ -1,6 +1,6 @@
 // Reference basic app files for caching
 const staticAssets = [
-  './', './styles.css', './app.js'
+  './', './styles.css', './app.js', './fallback.json', './images/fetch-dog.jpg'
 ];
 
 // cache static assets on install
@@ -38,6 +38,7 @@ async function networkFirst(req) {
     cache.put(req, res.clone());
     return res;
   } catch (error) {
-    return await cache.match(req);
+    const cachedResponse = await cache.match(req);
+    return cachedResponse || await caches.match('./fallback.json')
   }
 }
